@@ -1,4 +1,4 @@
-package knapsack
+package knapsack01
 
 import (
 	"sort"
@@ -90,7 +90,7 @@ func Knapsack01Ratio(profits []int, weights []int, capacity int) int {
 	return value
 }
 
-// Knapsack01Recursive recursove solution
+// Knapsack01Recursive recursve solution
 func Knapsack01Recursive(profits []int, weights []int, capacity int) int {
 	return knapsack01Recursive(profits, weights, 0, capacity)
 }
@@ -154,7 +154,7 @@ func Knapsack01DynamicLoop(profits []int, weights []int, capacity int) int {
 	return dp[0][capacity]
 }
 
-// Knapsack01DynamicLoopOpt loop soulution with dp[j]
+// Knapsack01DynamicLoopOpt loop soulution with One-dimensional array.
 func Knapsack01DynamicLoopOpt(profits []int, weights []int, capacity int) int {
 	dp := make([]int, capacity+1)
 	for i := 0; i < len(profits)-2; i++ {
@@ -165,7 +165,7 @@ func Knapsack01DynamicLoopOpt(profits []int, weights []int, capacity int) int {
 	return dp[capacity]
 }
 
-// Knapsack01DynamicHash dyanmic programing solution with hashmap instead slice
+// Knapsack01DynamicHash dyanmic programing solution with hash dictionary.
 func Knapsack01DynamicHash(profits []int, weights []int, capacity int) int {
 	dp := make([]map[int]int, len(profits))
 	for i := range dp {
