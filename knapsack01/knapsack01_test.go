@@ -31,21 +31,21 @@ func init() {
 }
 
 func TestKnapsack01Weight(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	for _, tt := range testTables {
 		t.Run(tt.dsName, func(t *testing.T) {
-			// t.Parallel()
-			got := Knapsack01Weight(tt.Profits, tt.Weights, tt.Capacity)
+			t.Parallel()
+			got := GreedyWeight(tt.Profits, tt.Weights, tt.Capacity)
 			t.Log("Got:", got, "Expected:", tt.BestProfit)
 		})
 	}
 }
 
 func TestKnapsack01Profit(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	for _, tt := range testTables {
 		t.Run(tt.dsName, func(t *testing.T) {
-			// t.Parallel()
+			t.Parallel()
 			got := Knapsack01Profit(tt.Profits, tt.Weights, tt.Capacity)
 			t.Log("Got:", got, "Expected:", tt.BestProfit)
 		})
@@ -53,10 +53,10 @@ func TestKnapsack01Profit(t *testing.T) {
 }
 
 func TestKnapsack01Ratio(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	for _, tt := range testTables {
 		t.Run(tt.dsName, func(t *testing.T) {
-			// t.Parallel()
+			t.Parallel()
 			got := Knapsack01Ratio(tt.Profits, tt.Weights, tt.Capacity)
 			t.Log("Got:", got, "Expected:", tt.BestProfit)
 		})
@@ -64,11 +64,11 @@ func TestKnapsack01Ratio(t *testing.T) {
 }
 
 func TestKnapsack01Recursive(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	for _, tt := range testTables {
 		t.Run(tt.dsName, func(t *testing.T) {
-			// t.Parallel()
-			got := Knapsack01Recursive(tt.Profits, tt.Weights, tt.Capacity)
+			t.Parallel()
+			got := Backtrack(tt.Profits, tt.Weights, tt.Capacity)
 			t.Log("Got:", got, "Expected:", tt.BestProfit)
 			if got != tt.BestProfit {
 				t.Errorf("Error in \033[1;31;40m%s\033[0m, got: %d, but want: %d\n", tt.dsName, got, tt.BestProfit)
@@ -78,11 +78,11 @@ func TestKnapsack01Recursive(t *testing.T) {
 }
 
 func TestKnapsack01Dynamic(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	for _, tt := range testTables {
 		t.Run(tt.dsName, func(t *testing.T) {
-			// t.Parallel()
-			got := Knapsack01Dynamic(tt.Profits, tt.Weights, tt.Capacity)
+			t.Parallel()
+			got := DynamicRecursive(tt.Profits, tt.Weights, tt.Capacity)
 			t.Log("Got:", got, "Expected:", tt.BestProfit)
 			if got != tt.BestProfit {
 				t.Errorf("Error in %s, got: %d, but want: %d\n", tt.dsName, got, tt.BestProfit)
@@ -92,11 +92,11 @@ func TestKnapsack01Dynamic(t *testing.T) {
 }
 
 func TestKnapsack01DynamicLoop(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	for _, tt := range testTables {
 		t.Run(tt.dsName, func(t *testing.T) {
-			// t.Parallel()
-			got := Knapsack01DynamicLoop(tt.Profits, tt.Weights, tt.Capacity)
+			t.Parallel()
+			got := Dynamic(tt.Profits, tt.Weights, tt.Capacity)
 			t.Log("Got:", got, "Expected:", tt.BestProfit)
 			if got != tt.BestProfit {
 				t.Errorf("Error in %s, got: %d, but want: %d\n", tt.dsName, got, tt.BestProfit)
@@ -105,11 +105,11 @@ func TestKnapsack01DynamicLoop(t *testing.T) {
 	}
 }
 func TestKnapsack01DynamicLoopOpt(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	for _, tt := range testTables {
 		t.Run(tt.dsName, func(t *testing.T) {
-			// t.Parallel()
-			got := Knapsack01DynamicLoopOpt(tt.Profits, tt.Weights, tt.Capacity)
+			t.Parallel()
+			got := DynamicCompress(tt.Profits, tt.Weights, tt.Capacity)
 			t.Log("Got:", got, "Expected:", tt.BestProfit)
 			if got != tt.BestProfit {
 				t.Errorf("Error in %s, got: %d, but want: %d\n", tt.dsName, got, tt.BestProfit)
@@ -119,11 +119,11 @@ func TestKnapsack01DynamicLoopOpt(t *testing.T) {
 }
 
 func TestKnapsack01DynamicHash(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	for _, tt := range testTables {
 		t.Run(tt.dsName, func(t *testing.T) {
-			// t.Parallel()
-			got := Knapsack01DynamicHash(tt.Profits, tt.Weights, tt.Capacity)
+			t.Parallel()
+			got := DynamicHash(tt.Profits, tt.Weights, tt.Capacity)
 			t.Log("Got:", got, "Expected:", tt.BestProfit)
 			if got != tt.BestProfit {
 				t.Errorf("Error in %s, got: %d, but want: %d\n", tt.dsName, got, tt.BestProfit)
@@ -134,7 +134,7 @@ func TestKnapsack01DynamicHash(t *testing.T) {
 
 func BenchmarkKnapsack01Weight(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Knapsack01Weight(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
+		GreedyWeight(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
 	}
 }
 
@@ -150,28 +150,28 @@ func BenchmarkKnapsack01Ratio(b *testing.B) {
 }
 func BenchmarkKnapsack01Recursive(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Knapsack01Recursive(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
+		Backtrack(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
 	}
 }
 
 func BenchmarkKnapsack01Dynamic(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Knapsack01Dynamic(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
+		DynamicRecursive(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
 	}
 }
 func BenchmarkKnapsack01DynamicLoop(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Knapsack01DynamicLoop(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
+		Dynamic(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
 	}
 }
 
 func BenchmarkKnapsack01DynamicLoopOpt(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Knapsack01DynamicLoopOpt(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
+		DynamicCompress(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
 	}
 }
 func BenchmarkKnapsack01DynamicHash(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Knapsack01DynamicHash(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
+		DynamicHash(testTables[0].Profits, testTables[0].Weights, testTables[0].Capacity)
 	}
 }
