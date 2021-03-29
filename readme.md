@@ -8,6 +8,12 @@ In the 01 Knapsack problem, we are given a knapsack of fixed capacity C. We are 
 
 Thus, a solution of the 01 Knapsack problem is a subset S of the N objects for which the weight sum is less than or equal to C, and which maximizes the total profit.
 
+**0-1 knapsack problem**, which restricts the number *{\displaystyle x_{i}}* of copies of each kind of item to zero or one. Given a set of *{\displaystyle n}* items numbered from 1 up to *{\displaystyle n}*, each with a weight *{\displaystyle w_{i}}* and a value *{\displaystyle v_{i}}*, along with a maximum weight capacity *{\displaystyle W}*,
+
+
+
+Here *{\displaystyle x_{i}}* represents the number of instances of item *{\displaystyle i}* to include in the knapsack. Informally, the problem is to maximize the sum of the values of the items in the knapsack so that the sum of the weights is less than or equal to the knapsack's capacity.
+
 ### Greedy Strategies
 
 #### Design

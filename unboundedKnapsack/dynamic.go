@@ -3,14 +3,12 @@
 // the only restriction on  is that it is a non-negative integer.
 package unboundedKnapsack
 
-import (
-	common "github.com/CausingBrick/knapsack"
-)
+import "github.com/CausingBrick/knapsack"
 
-// DP dynamic programing solution.
+// Dynamic dynamic programing solution.
 // Transfer equaltion is as bellow:
 // 		dp[i+1][j] = max(dp[i][j-K*w[i]]+k*v[i]) and the k >= 0
-func DP(items []*common.Item, capacity int) int {
+func Dynamic(items []*knapsack.Item, capacity int) int {
 	num := len(items)
 	dp := make([][]int, num+1)
 	for i := range dp {
@@ -19,28 +17,19 @@ func DP(items []*common.Item, capacity int) int {
 
 	for i := 0; i < num; i++ {
 		for j := 0; j <= capacity; j++ {
-			maxV := 0
-			//Found the number k of items we need.
-			for k := 0; ; k++ {
-				sumW, sumV := k*items[i].Weight, k*items[i].Value
-				if sumW <= j {
-					if maxV < sumV {
-						maxV = sumV
-					}
-				} else { //case: K*w[i] > j
-					break
-				}
+			for k := 0; k*items[i].Weight <= j; k++ {
+				dp[i+1][j] = max(dp[i+1][j],
+					dp[i][j-k*items[i].Weight]+k*items[i].Value)
 			}
-			dp[i+1][j] = maxV
 		}
 	}
 	return dp[num][capacity]
 }
 
-// DPOpt dynamic programing soulution with optimize the number of iterations.
+// DynamicOpt dynamic programing soulution with optimize the number of iterations.
 // The transfer equation is as follow:
 // 		dp[i+1][j] = max(dp[i][j],dp[i+1][j-w[i]]+v[i])
-func DPOpt(items []*common.Item, capacity int) int {
+func DynamicOpt(items []*knapsack.Item, capacity int) int {
 	num := len(items)
 	dp := make([][]int, num+1)
 	for i := range dp {
@@ -52,17 +41,18 @@ func DPOpt(items []*common.Item, capacity int) int {
 			if items[i].Weight > j {
 				dp[i+1][j] = dp[i][j]
 			} else {
-				dp[i+1][j] = common.Max(dp[i][j], dp[i+1][j-items[i].Weight]+items[i].Value)
+				dp[i+1][j] = max(dp[i][j],
+					dp[i+1][j-items[i].Weight]+items[i].Value)
 			}
 		}
 	}
 	return dp[num][capacity]
 }
 
-// DPCompress dynamic programing soulution with compressed dp table.
+// DynamicCompress dynamic programing soulution with compressed dp table.
 // The transfer equation is as follow:
 // 		dp[j] = max(dp[j], dp[j-w[i]]+v[i])
-func DPCompress(items []*common.Item, capacity int) int {
+func DynamicCompress(items []*knapsack.Item, capacity int) int {
 	num := len(items)
 	dp := make([]int, capacity+1)
 
@@ -74,4 +64,11 @@ func DPCompress(items []*common.Item, capacity int) int {
 		}
 	}
 	return dp[capacity]
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
