@@ -1,4 +1,4 @@
-package unboundedKnapsack
+package boundedKnapsack
 
 import (
 	"fmt"
@@ -43,9 +43,9 @@ type parents struct {
 type population []*individual
 
 // SGA simple genetic algorithm for ukp
-func SGA(items []*knapsack.Item, capacity int, conf *SGAConf) []int {
+func SGA(items []*knapsack.Item, capacity int, bound []int, conf *SGAConf) []int {
 	//Get the real encoding
-	chrom := chromosomeEncode(items, capacity)
+	chrom := chromosomeEncode(items, capacity, bound)
 	// Get the first generation population
 	pop := populationInit(items, capacity, chrom, conf.PopulationSize)
 	profits := make([]int, conf.Generations)
@@ -65,10 +65,10 @@ func SGA(items []*knapsack.Item, capacity int, conf *SGAConf) []int {
 
 // chromomeEncode encodes the number of each item that the backpack can
 // hold into a binary string of dynamic length.
-func chromosomeEncode(items []*knapsack.Item, capacity int) chromosome {
+func chromosomeEncode(items []*knapsack.Item, capacity int, bound []int) chromosome {
 	chromosome := make([]int, len(items))
 	for i, item := range items {
-		chromosome[i] = capacity/item.Weight + 1
+		chromosome[i] = min(capacity/item.Weight+1, bound[i])
 	}
 	return chromosome
 }
@@ -83,7 +83,6 @@ func populationInit(items []*knapsack.Item, capacity int, chromosome []int, popu
 		}
 		for i, quantity := range chromosome {
 			randChromosome := rand.Intn(quantity + 1)
-			// fmt.Println(quantity, randChromosome)
 			ind.chromo[i] = randChromosome
 			ind.fitnessProfit += randChromosome * items[i].Value
 			ind.fitnessWeight += randChromosome * items[i].Weight
