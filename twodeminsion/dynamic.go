@@ -7,7 +7,7 @@ func max(a, b int) int {
 	return b
 }
 
-// DynamicRec solution for the two-dimensional cost knapsack problem
+// DynamicRec solution for the two-dimensional cost knapsack problem.
 func DynamicRec(items []*Item, kp *KnapSack) int {
 	dp := make([][][]int, len(items)+1)
 	for i := range dp {
@@ -16,40 +16,38 @@ func DynamicRec(items []*Item, kp *KnapSack) int {
 			dp[i][j] = make([]int, kp.Volume+1)
 		}
 	}
-	return dynamicRec(items, dp, kp.Capacity, kp.Volume, 0)
+	return dynamicRec(dp, items, kp.Capacity, kp.Volume, 0)
 }
 
-func dynamicRec(items []*Item, dp [][][]int, cap, vol, i int) int {
+func dynamicRec(dp [][][]int, items []*Item, cap, vol, i int) int {
 	value := 0
-	if dp[i][cap][vol] > 0 {
-		return value
-	}
-
 	switch {
+	case dp[i][cap][vol] > 0:
+		value = dp[i][cap][vol]
 	case i == len(items):
 		break
 	case items[i].Bulk > vol || items[i].Weight > cap:
-		value = dynamicRec(items, dp, cap, vol, i+1)
+		value = dynamicRec(dp, items, cap, vol, i+1)
+		dp[i][cap][vol] = value
 	default:
 		value = max(
-			dynamicRec(items, dp, cap, vol, i+1),
+			dynamicRec(dp, items, cap, vol, i+1),
 			dynamicRec(
-				items,
 				dp,
+				items,
 				cap-items[i].Weight,
 				vol-items[i].Bulk,
 				i+1,
 			)+items[i].Value,
 		)
+		dp[i][cap][vol] = value
 	}
-	dp[i][cap][vol] = value
 	return value
 }
 
 // Dynamic dynamic programing solution.
 func Dynamic(items []*Item, kp *KnapSack) int {
-	num := len(items)
-	dp := make([][][]int, num+1)
+	dp := make([][][]int, len(items)+1)
 	for i := range dp {
 		dp[i] = make([][]int, kp.Capacity+1)
 		for j := range dp[i] {
@@ -58,9 +56,9 @@ func Dynamic(items []*Item, kp *KnapSack) int {
 	}
 
 	for i, item := range items {
-		for j := 0; j < kp.Capacity; j++ {
-			for k := 0; k < kp.Volume; k++ {
-				if item.Bulk > kp.Volume || item.Weight > kp.Capacity {
+		for j := 0; j <= kp.Capacity; j++ {
+			for k := 0; k <= kp.Volume; k++ {
+				if item.Weight > j || item.Bulk > k {
 					dp[i+1][j][k] = dp[i][j][k]
 				} else {
 					dp[i+1][j][k] = max(
@@ -71,8 +69,7 @@ func Dynamic(items []*Item, kp *KnapSack) int {
 			}
 		}
 	}
-
-	return dp[num][kp.Capacity][kp.Volume]
+	return dp[len(items)][kp.Capacity][kp.Volume]
 }
 
 // DynamicCompress loop soulution with two-dimensional array.

@@ -7,6 +7,20 @@ import (
 	"strings"
 )
 
+type dataset struct {
+	name string
+	path string
+	kp   *KnapSack
+	its  Items
+	slt  int
+}
+
+func datasetNew(name, path string) *dataset {
+	ds := dataset{name: name, path: path}
+	ds.kp, ds.its, ds.slt = getSet2D(path, name)
+	return &ds
+}
+
 var extension = ".txt"
 
 var (
@@ -46,8 +60,8 @@ func readToLine(setPath, setName, suffix string) ([]int, error) {
 	return data, nil
 }
 
-// GetSet2D gets data forom setpath with setName
-func GetSet2D(setPath, setName string) (*KnapSack, Items, int) {
+// getSet2D gets data forom setpath with setName
+func getSet2D(setPath, setName string) (*KnapSack, Items, int) {
 	if setPath == "" || setName == "" {
 		panic("Worng path for dataset")
 	}
