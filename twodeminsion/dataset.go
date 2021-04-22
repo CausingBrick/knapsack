@@ -7,46 +7,6 @@ import (
 	"strings"
 )
 
-// GetSet2D gets data forom setpath with setName
-func GetSet2D(setPath, setName string) (*KnapSack, Items) {
-	if setPath == "" || setName == "" {
-		panic("Worng path for dataset")
-	}
-
-	cap, err := readToLine(setPath, setName, capSfx)
-	if err != nil {
-		panic(err)
-	}
-
-	vol, err := readToLine(setPath, setName, volSfx)
-	if err != nil {
-		panic(err)
-	}
-
-	kp := KnapSackNew(cap[0], vol[0])
-
-	val, err := readToLine(setPath, setName, prftSfx)
-	if err != nil {
-		panic(err)
-	}
-
-	wght, err := readToLine(setPath, setName, wghtSfx)
-	if err != nil {
-		panic(err)
-	}
-
-	bulk, err := readToLine(setPath, setName, bulkSfx)
-	if err != nil {
-		panic(err)
-	}
-
-	its := make([]*Item, len(val))
-	for i := range its {
-		its[i] = ItemNew(wght[i], val[i], bulk[i])
-	}
-	return kp, its
-}
-
 var extension = ".txt"
 
 var (
@@ -84,4 +44,50 @@ func readToLine(setPath, setName, suffix string) ([]int, error) {
 		data = append(data, num)
 	}
 	return data, nil
+}
+
+// GetSet2D gets data forom setpath with setName
+func GetSet2D(setPath, setName string) (*KnapSack, Items, int) {
+	if setPath == "" || setName == "" {
+		panic("Worng path for dataset")
+	}
+
+	cap, err := readToLine(setPath, setName, capSfx)
+	if err != nil {
+		panic(err)
+	}
+
+	vol, err := readToLine(setPath, setName, volSfx)
+	if err != nil {
+		panic(err)
+	}
+
+	kp := KnapSackNew(cap[0], vol[0])
+
+	val, err := readToLine(setPath, setName, prftSfx)
+	if err != nil {
+		panic(err)
+	}
+
+	wght, err := readToLine(setPath, setName, wghtSfx)
+	if err != nil {
+		panic(err)
+	}
+
+	bulk, err := readToLine(setPath, setName, bulkSfx)
+	if err != nil {
+		panic(err)
+	}
+
+	its := make([]*Item, len(val))
+	for i := range its {
+		its[i] = ItemNew(wght[i], val[i], bulk[i])
+	}
+
+	slt, err := readToLine(setPath, setName, sltSfx)
+	if err != nil {
+		panic(err)
+	}
+
+	return kp, its, slt[0]
 }

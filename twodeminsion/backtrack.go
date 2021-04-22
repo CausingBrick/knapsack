@@ -8,7 +8,7 @@ func Backtrack(items []*Item, kp *KnapSack) int {
 func backtrack(items []*Item, cap, vol, i int) int {
 	value := 0
 	switch {
-	case i == len(items)-1:
+	case i == len(items):
 		break
 	case items[i].Bulk > vol || items[i].Weight > cap:
 		value = backtrack(items, cap, vol, i+1)

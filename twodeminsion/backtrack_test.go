@@ -1,37 +1,35 @@
 package twodeminsion
 
 import (
-	"log"
 	"testing"
 )
 
-type testTable struct {
-	kp  *KnapSack
-	its Items
+var bkSets = []struct {
+	name string
+	path string
+	kp   *KnapSack
+	its  Items
+	slt  int
+}{
+	{name: "set05", path: "./testdata/"},
+	{name: "set20", path: "./testdata/"},
+	{name: "set40", path: "./testdata/"},
+	// {name: "set100", path: "./testdata/"},
+	// {name: "set500", path: "./testdata/"},
 }
-
-// Add test data from here.
-// Key: Name for dataset, Value: path + set name
-var setPath = map[string]string{
-	"set05": "./testdata/",
-	"set20": "./testdata/",
-	// "set40":  "./testdata/",
-	// "set100": "./testdata",
-	// "set500": "./testdata",
-}
-
-var testTables []*testTable
 
 //Load data from the datasetNames befrore running the test.
 func init() {
-	for n, p := range setPath {
-		kp, its := GetSet2D(p, n)
-		testTables = append(testTables, &testTable{kp, its})
+	for i, set := range bkSets {
+		bkSets[i].kp, bkSets[i].its, bkSets[i].slt = GetSet2D(set.path, set.name)
+
 	}
 }
 
 func TestBacktrack(t *testing.T) {
-	for _, v := range testTables {
-		log.Println(Backtrack(v.its, v.kp))
+	for _, set := range bkSets {
+		if got := Backtrack(set.its, set.kp); got != set.slt {
+			t.Errorf("Want %d, got %d\n", set.slt, got)
+		}
 	}
 }
