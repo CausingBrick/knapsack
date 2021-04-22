@@ -7,12 +7,23 @@ import (
 	"strings"
 )
 
+var extension = ".txt"
+
 var (
-	extension = ".txt"
-	cSuffix   = "_c" + extension
-	pSuffix   = "_p" + extension
-	wSuffix   = "_w" + extension
-	sSuffix   = "_s" + extension
+	// item profit
+	prftSfx = "_p" + extension
+	// item weight
+	wghtSfx = "_w" + extension
+	// item bulk
+	bulkSfx = "_b" + extension
+
+	// kp capacity
+	capSfx = "_c" + extension
+	// kp volume
+	volSfx = "_v" + extension
+
+	// soulution
+	sltSfx = "_s" + extension
 )
 
 // readToLine returns all data into a singe line.

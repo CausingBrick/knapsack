@@ -19,23 +19,23 @@ func KnapSack01New(setPath, setName string) *KnapSack01 {
 		err     error
 	)
 
-	capacity, err := readToLine(setPath, setName, cSuffix)
+	capacity, err := readToLine(setPath, setName, capSfx)
 	if err != nil {
 		panic(err)
 	}
 	dataset.Capacity = capacity[0]
 
-	dataset.selected, err = readToLine(setPath, setName, sSuffix)
+	dataset.selected, err = readToLine(setPath, setName, sltSfx)
 	if err != nil {
 		panic(err)
 	}
 
-	dataset.Profits, err = readToLine(setPath, setName, pSuffix)
+	dataset.Profits, err = readToLine(setPath, setName, prftSfx)
 	if err != nil {
 		panic(err)
 	}
 
-	dataset.Weights, err = readToLine(setPath, setName, wSuffix)
+	dataset.Weights, err = readToLine(setPath, setName, wghtSfx)
 	if err != nil {
 		panic(err)
 	}

@@ -13,11 +13,11 @@ func ReadDataset(setPath string) *knapsack.KnapSack {
 
 	kp := knapsack.New()
 	// read capacity
-	capacity, _ := ReadToLine(setPath + cSuffix)
+	capacity, _ := ReadToLine(setPath + capSfx)
 	kp.Capacity = capacity[0]
 	// read value and weight
-	values, _ := ReadToLine(setPath + pSuffix)
-	weights, _ := ReadToLine(setPath + wSuffix)
+	values, _ := ReadToLine(setPath + prftSfx)
+	weights, _ := ReadToLine(setPath + wghtSfx)
 	kp.Items = knapsack.ItemsNew(values, weights)
 	return kp
 }
