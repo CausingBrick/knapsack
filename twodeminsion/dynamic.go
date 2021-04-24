@@ -1,10 +1,15 @@
 package twodeminsion
 
-func max(a, b int) int {
-	if a > b {
-		return a
+import "sync"
+
+func max(nums ...int) int {
+	m := nums[0]
+	for _, num := range nums {
+		if num > m {
+			m = num
+		}
 	}
-	return b
+	return m
 }
 
 // DynamicRec solution for the two-dimensional cost knapsack problem.
@@ -48,13 +53,18 @@ func dynamicRec(dp [][][]int, items []*Item, cap, vol, i int) int {
 // Dynamic dynamic programing solution.
 func Dynamic(items []*Item, kp *KnapSack) int {
 	dp := make([][][]int, len(items)+1)
+	var wg sync.WaitGroup
+	wg.Add(len(items) + 1)
 	for i := range dp {
-		dp[i] = make([][]int, kp.Capacity+1)
-		for j := range dp[i] {
-			dp[i][j] = make([]int, kp.Volume+1)
-		}
+		go func(i int) {
+			dp[i] = make([][]int, kp.Capacity+1)
+			for j := range dp[i] {
+				dp[i][j] = make([]int, kp.Volume+1)
+			}
+			wg.Done()
+		}(i)
 	}
-
+	wg.Wait()
 	for i, item := range items {
 		for j := 0; j <= kp.Capacity; j++ {
 			for k := 0; k <= kp.Volume; k++ {
