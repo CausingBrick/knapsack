@@ -1,4 +1,4 @@
-package twodeminsion
+package twodimension
 
 import (
 	"math/rand"

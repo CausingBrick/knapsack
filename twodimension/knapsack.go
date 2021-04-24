@@ -1,4 +1,4 @@
-package twodeminsion
+package twodimension
 
 type KnapSack struct {
 	Capacity int

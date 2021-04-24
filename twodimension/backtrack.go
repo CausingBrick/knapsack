@@ -1,4 +1,4 @@
-package twodeminsion
+package twodimension
 
 // Backtrack solution for the two-dimensional cost knapsack problem
 func Backtrack(items []*Item, kp *KnapSack) int {
