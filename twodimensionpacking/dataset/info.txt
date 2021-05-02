@@ -1,0 +1,71 @@
+				
+Test problems for 2D rectangular bin packing				
+				
+				
+				
+used in the following article:				
+Hopper E. and Turton B. C. H., 2002.				
+ An empirical study of meta-heuristics applied to 2D rectangular bin packing. 				
+ Special Issue on Cutting, Packing and Knapsacking Problems, Studia Informatica, vol. 2, no. 1. ISBN 2-912590-13-2; ISSN Regular 1625-7545.				
+				
+				
+				
+problem name			item no.	object no.
+M1a, M1b, M1c, M1d, M1e			100	16
+M2a, M2b, M2c, M2d, M2e			100	16
+M3a, M3b, M3c, M3d, M3e			150	20
+				
+				
+details of items: 		see sheets M1, M2 and M3		
+details of obejects: 		see sheet object		
+				
+				
+				
+Test Problems				
+				
+Three problem categories have been created with the problem generators described in [H00] that contain different sized items and objects. 				
+Each problem category contains five test problems. 				
+The test problems have been constructed such that the optimum solution is not known, but the number of objects is large enough to accommodate all items. 				
+The item dimensions have been generated randomly with the longer side ranging between 10% and 100% of the object width.				
+After all items have been created, their dimensions have been scaled by a factor (>1) so that the five problems in one category have roughly the same total item area. 				
+				
+				
+[HT00] Hopper E. & Turton B. C. H. 				
+An empirical investigation of meta-heuristic and heuristic algorithms for a 2D packing problem. 				
+European Journal of Operations Research, vol. 128/1, pp. 34-57, 2000.				
+				
+				
+				
+Test Problems from the Literature				
+				
+The problems cgcut1 – cgcut3 [CW77] and gcut 1 - gcut 13 and ngcut 1 - ngcut 12 [B85bc] are based on test problems known from the literature.				
+				
+These test problems are 2D cutting problems, which were transformed to 2D bin packing instances according to [MV98] 				
+by first ignoring the value of the item and 				
+secondly by generating the maximum number of items for each type (for cgcut and ngcut). 				
+				
+				
+				
+[B85b] Beasley J. E. Algorithms for unconstrained two-dimensional guillotine cutting. 				
+Journal of the Operational Research Society, vol. 36, pp. 297 - 306, 1985.				
+				
+[B85c] Beasley J. E. An exact two-dimensional non-guillotine cutting tree search procedure. 				
+Operational Research, vol. 33, pp. 49 - 64, 1985.				
+				
+[CW77] Christofides N. & Whitlock C. An algorithm for two-dimensional cutting problems. 				
+Journal of the Operational Research Society, vol. 25, pp. 30 - 44, 1977.				
+				
+[MV98] Martello S. & Vigo S. 				
+Exact Solution of the Two-Dimensional Finite Bin Packing Problem. 				
+Management Science, vol. 44, pp. 388 - 399, 1998.				
+				
+				
+				
+				
+Submitted by Eva Hopper				
+HopperE@gmx.net				
+				
+For more info see also:				
+				
+http://home.t-online.de/home/villahost/eva/				
+http://villahost.homeip.net/villa/eva/				
