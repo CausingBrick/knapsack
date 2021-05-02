@@ -1,21 +1,51 @@
 package twodimensionpacking
 
-//BottomLeft bottom left first algoritms
-// func BottomLeft(Weight *, items *Items) (int, float32) {
+import (
+	"sort"
+)
 
-// 	return 0, 0
-// }
+// BottomLeft bottom left first algoritms
+func BottomLeft(boxH, boxW int, items []*Item) []*Box {
+	sortArea := items
+	sort.Slice(sortArea, func(i int, j int) bool {
+		return items[i].Area() > items[j].Area()
+	})
 
-// MAXDropHeight returns the maximum drop height of the item in the box.
-func MAXDropHeight(box *Box, item *Item, sp *Point) (height int) {
+	var boxes []*Box
+	for len(sortArea) != 0 {
+		box := BoxNew(boxH, boxW)
+		for i := 0; i < len(sortArea); i++ {
+			item := sortArea[i]
+			// set starting point of item
+			sp := PointNew(boxW-item.Width, boxH-item.Height)
+			if isOverlap(box, item, sp) {
+				continue
+			}
+			movedPoint := getMovedPoint(box, item, sp)
+			if sp == movedPoint {
+				continue
+			}
+			// intsert item to box
+			box.StoredItem = append(box.StoredItem, RectangleNew(&item.Size, movedPoint))
+			// delete item form sortHeight
+			sortArea = append(sortArea[:i], sortArea[i+1:]...)
+			i--
+		}
+		boxes = append(boxes, box)
+	}
+	return boxes
+}
+
+// maxDropHeight returns the maximum drop height of the item in the box.
+func maxDropHeight(box *Box, item *Item, sp *Point) (height int) {
 	if len(box.StoredItem) == 0 {
 		return sp.Y
 	}
 
 	dists := []int{}
-	itemBottomLine := RectangleNew(&item.Size, sp).BottomLine()
+	itemRec := RectangleNew(&item.Size, sp)
 	for _, stored := range box.StoredItem {
-		isInter, dist := itemBottomLine.VerticalIntersect(stored.TopLine())
+		isInter, dist := itemRec.BottomLine().VerticalIntersect(stored.TopLine())
 		if isInter {
 			dists = append(dists, dist)
 		}
@@ -28,17 +58,17 @@ func MAXDropHeight(box *Box, item *Item, sp *Point) (height int) {
 	return
 }
 
-// MAXShiftWeight returns the maximum shift left with of the item which will
+// maxShiftWeight returns the maximum shift left with of the item which will
 //  be placed in the box.
-func MAXShiftWeight(box *Box, item *Item, sp *Point) (height int) {
+func maxShiftWeight(box *Box, item *Item, sp *Point) (height int) {
 	if len(box.StoredItem) == 0 {
 		return sp.X
 	}
 
 	dists := []int{}
-	itemLeftLine := RectangleNew(&item.Size, sp).LeftLine()
+	itemRec := RectangleNew(&item.Size, sp)
 	for _, stored := range box.StoredItem {
-		isInter, dist := itemLeftLine.HorizontalIntersect(stored.RightLine())
+		isInter, dist := itemRec.LeftLine().HorizontalIntersect(stored.RightLine())
 		if isInter {
 			dists = append(dists, dist)
 		}
@@ -51,39 +81,41 @@ func MAXShiftWeight(box *Box, item *Item, sp *Point) (height int) {
 	return
 }
 
-func BLInsertItem(box *Box, item *Item, sp *Point) *Point {
+// getMovedPoint returns the point of item after moving with BL strategy.
+func getMovedPoint(box *Box, item *Item, sp *Point) *Point {
 	final := *sp
 	for {
-		maxh := MAXDropHeight(box, item, sp)
-		final.Y -= maxh
-		maxw := MAXShiftWeight(box, item, sp)
-		final.X -= maxw
-		if maxh == 0 && maxw == 0 {
-			return &final
+		maxh := maxDropHeight(box, item, &final)
+		if maxh > 0 {
+			final.Y -= maxh
+		}
+		maxw := maxShiftWeight(box, item, &final)
+		if maxw > 0 {
+			final.X -= maxw
+		}
+		if maxh <= 0 && maxw <= 0 {
+			break
 		}
 	}
+	return &final
 }
 
-// func Overlap(box *Box, item *Item, sp *Point) bool {
-
-// }
-
-func max(nums ...int) int {
-	m := nums[0]
-	for _, num := range nums {
-		if num > m {
-			m = num
+// overlap checks if item overlap with items in box.
+func isOverlap(box *Box, item *Item, sp *Point) bool {
+	for _, inbox := range box.StoredItem {
+		if RectangleNew(&item.Size, sp).Intersect(inbox) {
+			return true
 		}
 	}
-	return m
+	return false
 }
 
 func min(nums ...int) int {
-	m := nums[0]
+	min := nums[0]
 	for _, num := range nums {
-		if num < m {
-			m = num
+		if num < min {
+			min = num
 		}
 	}
-	return m
+	return min
 }

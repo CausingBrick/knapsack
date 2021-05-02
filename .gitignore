@@ -1,6 +1,6 @@
 *.out
 *.test
+*.png
 *.vscode/
-boundedKnapsack/result_after.txt
 .gitignore
-boundedKnapsack/result.txt
+*result*.txt
