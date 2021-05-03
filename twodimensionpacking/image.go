@@ -19,6 +19,9 @@ func DrawBox(box *Box, imgPath string, scale int) error {
 		// dc.Stroke()
 		dc.Fill()
 	}
+	dc.DrawRectangle(0, 0, float64(dc.Width()), float64(dc.Height()))
+	dc.SetRGB(0, 0, 0)
+	dc.Stroke()
 	dc.SavePNG(imgPath + ".png")
 	return nil
 }
