@@ -46,6 +46,11 @@ func (s *Size) Area() int {
 	return s.Height * s.Width
 }
 
+// CanHold returns if r can hold r1 in w and h.
+func (s *Size) CanHold(s1 *Size) bool {
+	return s.Width >= s1.Width && s.Height >= s1.Height
+}
+
 type Rectangle struct {
 	*Size
 	// Sp is the bottom left point
