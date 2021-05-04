@@ -2,7 +2,6 @@ package twodimensionpacking
 
 import (
 	"fmt"
-	"log"
 	"testing"
 )
 
@@ -23,7 +22,7 @@ func TestBottomLeft(t *testing.T) {
 				itsArea += float64(item.Area())
 			}
 		}
-		DrawBoxes(boxes, "./dataset/M1a/", 10)
+		DrawBoxes(boxes, "img/BL_M1a", 10)
 		fmt.Printf("Set: %s\nBoxes nums: %d, Area usage: %f %% .\n", sets[0].name, len(boxes), itsArea/boxesArea*100)
 		fmt.Printf("Area box:%f, items:%f.\n", boxesArea, itsArea)
 	})
@@ -37,18 +36,8 @@ func TestBottomLeft(t *testing.T) {
 				itsArea += float64(item.Area())
 			}
 		}
-		DrawBoxes(boxes, "./dataset/M3c/", 10)
+		DrawBoxes(boxes, "img/BL_M3c", 2)
 		fmt.Printf("Set: %s\nBoxes nums: %d, Area usage: %f %% .\n", sets[1].name, len(boxes), itsArea/boxesArea*100)
 		fmt.Printf("Area box:%f, items:%f.\n", boxesArea, itsArea)
 	})
-}
-
-func TestReadToLines(t *testing.T) {
-	nums, err := readToLines("./dataset/M3c.txt")
-	if err != nil {
-		log.Println(err, nums)
-	}
-	for _, num := range nums {
-		fmt.Println(num)
-	}
 }
